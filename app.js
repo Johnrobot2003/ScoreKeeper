@@ -3,6 +3,9 @@ const displayP2 = document.querySelector('#displayScoreP2');
 const btnP1 = document.querySelector('#AddScoreP1')
 const btnP2 = document.querySelector('#AddScoreP2')
 const resetBtn = document.querySelector('#resetGame');
+const delBtn = document.querySelector('.delete')
+const notifHeader = document.querySelector('.notification')
+
 const winningScoreSelect = document.querySelector('#winningScore');
 
 
@@ -10,16 +13,22 @@ let p1Score = 0;
 let p2Score = 0;
 let winningScore = parseInt(winningScoreSelect.value);
 let isGameOver = false;
+let clickCount = 0;
+let clickTimer;
 
+delBtn.addEventListener('click', function (){
+   notifHeader.style.display = 'none';
+})
 
 btnP1.addEventListener('click', function () {
+    notifHeader.style.display = 'none';
     if (!isGameOver) {
         p1Score++;
         if (p1Score === winningScore) {
             isGameOver = true;
             displayP1.classList.add('winner');
             displayP2.classList.add('loser');
-             btnP1.disabled = true;
+            btnP1.disabled = true;
             btnP2.disabled = true;
         }
         displayP1.textContent = p1Score;
@@ -32,10 +41,11 @@ winningScoreSelect.addEventListener('change', function () {
     console.log(winningScore);
 });
 btnP2.addEventListener('click', function () {
-
+    notifHeader.style.display = 'none';
     if (!isGameOver) {
         p2Score++;
         displayP2.textContent = p2Score;
+
         if (p2Score === winningScore) {
             isGameOver = true;
             displayP2.classList.add('winner');
@@ -45,8 +55,18 @@ btnP2.addEventListener('click', function () {
         }
     }
 });
-resetBtn.addEventListener('click', resetGame);
+resetBtn.addEventListener('click', function () {
+    clickCount++;
 
+    if (p1Score !== 0 || p2Score !== 0) {
+            resetGame();
+    }else {
+        notifHeader.style.display = 'block';
+        
+    }
+
+
+});
 
 function resetGame() {
     p1Score = 0;
