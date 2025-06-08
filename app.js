@@ -14,37 +14,41 @@ let isGameOver = false;
 
 btnP1.addEventListener('click', function () {
     if (!isGameOver) {
-           p1Score++;
-         if (p1Score === winningScore) {
+        p1Score++;
+        if (p1Score === winningScore) {
             isGameOver = true;
             displayP1.classList.add('winner');
-            displayP2.classList.add('loser');  
+            displayP2.classList.add('loser');
+             btnP1.disabled = true;
+            btnP2.disabled = true;
+        }
+        displayP1.textContent = p1Score;
     }
-    displayP1.textContent = p1Score;
-    }
-   
+
 });
 winningScoreSelect.addEventListener('change', function () {
-    winningScore= parseInt(this.value);
+    winningScore = parseInt(this.value);
     resetGame();
     console.log(winningScore);
- });
+});
 btnP2.addEventListener('click', function () {
 
     if (!isGameOver) {
-         p2Score++;
-         displayP2.textContent = p2Score;
-         if (p2Score === winningScore) {
+        p2Score++;
+        displayP2.textContent = p2Score;
+        if (p2Score === winningScore) {
             isGameOver = true;
-             displayP2.classList.add('winner');
-            displayP1.classList.add('loser');  
-         }
+            displayP2.classList.add('winner');
+            displayP1.classList.add('loser');
+            btnP1.disabled = true;
+            btnP2.disabled = true;
+        }
     }
 });
-resetBtn.addEventListener('click', resetGame );
+resetBtn.addEventListener('click', resetGame);
 
 
-function resetGame(){
+function resetGame() {
     p1Score = 0;
     p2Score = 0;
     displayP1.textContent = p1Score;
@@ -52,4 +56,6 @@ function resetGame(){
     isGameOver = false;
     displayP1.classList.remove('winner', 'loser');
     displayP2.classList.remove('winner', 'loser');
+    btnP1.disabled = false;
+    btnP2.disabled = false;
 }
